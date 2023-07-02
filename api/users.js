@@ -10,25 +10,24 @@ const { upload } = require('../utils/upload');
 const secretKey = require('../utils/secret');
 
 //1. Get all users
-router.route("/").get(async (req, res) => {
-    const users = await Users.find({})
-    res.json(users)
+router.get("/", async (req, res) => {
+    const users = await Users.find({});
+    res.json(users);
 });
 
 //2. Create a new user
 router.post("/", async (req, res) => {
     const { phone } = req.body;
-    const user = await Users.findOne({ phone }).exec();
-    if (user) {
-        return res.json({ status: 201, data: user, msg: "User Already Exists" });
+    const userExists = await Users.exists({ phone });
+    if (userExists) {
+        return res.json({ status: 201, msg: "User Already Exists" });
     }
     const count = await Users.countDocuments();
     const userId = `USER${(count + 1).toString().padStart(4, "0")}`;
-    const newUser = new Users({ user_id: userId, ...req.body });
-    const response = await newUser.save();
+    const newUser = await Users.create({ user_id: userId, ...req.body });
     res.json({
         status: 200,
-        data: response,
+        data: newUser,
         msg: "User created successfully"
     });
 })
@@ -40,62 +39,44 @@ router.route('/auth/signin-email-password').post(async (req, res) => {
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
     }
-    await bcrypt.compare(password, user.password, (error, passwordMatch) => {
-        if (error) {
-            return res.status(401).json({ message: 'Invalid email or password' });
-        }
-        if (passwordMatch) {
-            const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
-            res.json({ token, user });
-        } else {
-            res.json({ token: null, message: 'Wrong password! Please Try again' });
-        }
-    });
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (passwordMatch) {
+        const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+        res.json({ token, user });
+    } else {
+        res.json({ token: null, message: 'Wrong password! Please Try again' });
+    }
 });
 
 //4. User signup using email and password
 router.route('/auth/signup-email-password').post(async (req, res) => {
     const { email_id, password } = req.body;
-
     try {
         // Check if the user already exists
         const existingUser = await Users.findOne({ email_id });
         if (existingUser) {
             return res.status(409).json({ message: 'User already exists' });
         }
-
         //Increase the count of employers
         const count = await Users.countDocuments();
         const userId = `USER${(count + 1).toString().padStart(4, "0")}`;
-
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-
         // Create a new user with the hashed password
-        const newUser = new Users({
-            user_id: userId,
-            email_id,
-            password: hashedPassword
-        });
+        const newUser = new Users({ user_id: userId, email_id, password: hashedPassword });
 
         // Save the user to the database
         await newUser.save();
-
-        res.json({
-            status: 200,
-            data: newUser,
-            msg: "Employer created successfully"
-        });
+        res.json({ status: 200, data: newUser, msg: "Employer created successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
 //5. Get specific user
-router.route("/:id").get(async (req, res) => {
-    let { id } = req.params;
+router.get("/:id", async (req, res) => {
     try {
-        const user = await Users.findById(id);
+        const user = await Users.findById(req.params.id);
         res.json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -105,22 +86,23 @@ router.route("/:id").get(async (req, res) => {
 //6. Update a user
 router.put("/:id", async (req, res) => {
     try {
-        const updatedUser = await Users.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const { id } = req.params;
+        const updatedUser = await Users.findByIdAndUpdate(id, req.body, { new: true });
         res.json({
             status: 201,
             data: updatedUser,
             msg: "Account Updated Successfully",
         });
     } catch (error) {
-        res.json({ status: 403, msg: "Bad Request" });
+        res.status(403).json({ msg: "Bad Request" });
     }
 });
 
 //7. Delete single user by id
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
-    const deletedUser = await Users.findByIdAndDelete(id);
-    res.json(deletedUser);
+    await Users.findByIdAndDelete(id);
+    res.json({ message: 'User deleted successfully' });
 });
 
 //8. Delete all users
@@ -130,19 +112,12 @@ router.delete("/", async (req, res) => {
 });
 
 //9. Google login route
-router.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-);
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 //10. Google login callback route
-router.get(
-    '/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
-    (req, res) => {
-        // Redirect or respond with success message
-        res.redirect('/profile');
-    }
-);
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
+    res.redirect('/profile');
+});
 
 //11. User logout
 router.get('/logout', (req, res) => {

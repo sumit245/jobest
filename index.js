@@ -19,15 +19,10 @@ app.use('/api/users', users);
 app.use('/api/jobs', jobs);
 
 // Connect to MongoDB   
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Define your routes here
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server started on port ${port}`);
-});
+app.listen(port, () => { console.log(`Server started on port ${port}`) });
 
