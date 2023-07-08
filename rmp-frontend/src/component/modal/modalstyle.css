@@ -1,0 +1,228 @@
+/*Modal*/
+
+.popup {
+    background: #FFFFFF;
+    border-radius: 6px;
+    border: #AFB6C2CC solid 1px;
+    min-width: 28%;
+    padding: 0.4em;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+    font-weight: bold;
+    transition: all .5s;
+    margin-top: 1em;
+    -webkit-box-shadow: 8px 8px 20px 0px rgba(159, 166, 178, 1);
+    -moz-box-shadow: 8px 8px 20px 0px rgba(159, 166, 178, 1);
+    box-shadow: 8px 8px 20px 0px rgba(159, 166, 178, 1);
+    z-index: 100;
+}
+
+.popup-header {
+    padding: 0.4em;
+    margin-inline: 0.2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: #AFB6C2CC solid 1px;
+}
+
+.popup-body {
+    padding-inline: 0.4em;
+}
+
+.popup-footer {
+    padding: 0.4em;
+    margin-inline: 0.2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    border-top: #AFB6C2CC solid 1px;
+}
+
+
+.close-btn {
+    border: #DC4C64 solid 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #DC4C64;
+    color: #FFFFFF;
+    height: 24px;
+    width: 24px;
+    border-radius: 4px;
+}
+
+.popup-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.accept-btn {
+    background-color: #1017e3;
+    color: #FFFFFF;
+    border-radius: 4px;
+    border: none;
+    padding: 0.4em 1.2em;
+    margin-inline: 2px;
+    text-transform: capitalize;
+}
+
+.reject-btn {
+    background-color: #8E95A1;
+    color: #FFFFFF;
+    border-radius: 4px;
+    border: none;
+    padding: 0.4em 1.2em;
+    margin-inline: 2px;
+    text-transform: capitalize;
+}
+
+
+
+.login-form .social-icon {
+    width: 100%;
+    font-size: 20px;
+    padding-top: 12px;
+    color: #fff;
+    text-align: center;
+    float: left;
+}
+
+.login-form {
+    background: #fff;
+    width: 450px;
+    border-radius: 6px;
+    margin: 0 auto;
+    display: table;
+    padding: 15px 30px 30px;
+    box-sizing: border-box;
+}
+
+.form-group {
+    float: left;
+    width: 100%;
+    margin: 0 0 15px;
+    position: relative;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 5px;
+    height: 42px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 15px;
+    padding-left: 75px;
+}
+
+.login-form .form-group .input-icon {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    border-radius: 25px;
+    bottom: 0;
+    height: 100%;
+    padding-left: 24px;
+    color: #666;
+}
+
+.login-form .login-btn {
+    background: #1017e3;
+    padding: 11px 50px;
+    border-color: #1017e3;
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 20px;
+    border: 1px solid #1017e3;
+    border-radius: 44px;
+    width: 50%;
+    height: 56px;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.login-form .reset-psw {
+    float: right;
+    text-decoration: none;
+    color: #1017e3;
+    font-size: 12px;
+    text-align: right;
+    margin-top: 4px;
+}
+
+.login-form .social-icon button {
+    font-size: 20px;
+    color: white;
+    height: 44px;
+    width: 44px;
+    background: #1017e3;
+    border-radius: 60%;
+    margin: 0px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    opacity: 0.9;
+}
+
+.login-form .seperator {
+    float: left;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    margin: 42px 0 0;
+}
+
+.login-form .seperator b {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    color: #666;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 40px;
+    background: #fff;
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    position: relative;
+    top: -22px;
+    z-index: 1;
+}
+
+/* .login-text {
+    float: right;
+    text-align: right;
+    color: #666;
+    font-size: 12px;
+    margin-top: 8px;
+} */
+
+@media screen and (max-width:767px) {
+    .login-form {
+        width: 90%;
+        padding: 15px 15px 30px;
+    }
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+/* Avatar image */
+img.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}

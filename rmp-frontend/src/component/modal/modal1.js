@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import './modalstyle.css'
 
 export default function Modal({ children }) {
     const overlay = useRef();
@@ -36,7 +37,7 @@ export default function Modal({ children }) {
         <div
             ref={overlay}
             onClick={onClick}
-            className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/60"
+            className="dialog-custom"
         >
             <div
                 ref={wrapper}

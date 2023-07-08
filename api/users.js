@@ -132,6 +132,7 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 
 //13. Api endpoint to upload a resume
 router.post('/upload/:id', upload.single('resume'), async (req, res) => {
+    console.log(req.file)
     try {
         const { id } = req.params;
         const user = await Users.findById(id);
@@ -171,9 +172,7 @@ router.post('/upload-multiple/:id', upload.array('documents', 5), async (req, re
 
 //15. Apply for a job
 router.post('/apply/:jobId', authMiddleware, async (req, res) => {
-    const jobId = req.params.jobId;
     const userId = req.user.user_id; // Assuming you have middleware to authenticate and set req.user
-
     try {
         // Check if the job exists
         const job = await Jobs.findById(req.params.jobId);

@@ -24,7 +24,7 @@ export default function Navbar() {
                 <span className="navbar-toggler-icon" />
             </button>
             <div
-                className="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0"
+                className="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0 "
                 id="mobilemenu">
                 <ul className="navbar-nav ms-auto pt-2 pt-lg-0">
                     <li className="nav-item px-2">

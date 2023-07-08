@@ -3,4 +3,4 @@
 /node_modules/**
 /public/**
 /src/**
-/uploads/**
+blackbox.config.json
