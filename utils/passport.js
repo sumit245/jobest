@@ -9,7 +9,7 @@ passport.use(
         {
             clientID: 'YOUR_LINKEDIN_CLIENT_ID',
             clientSecret: 'YOUR_LINKEDIN_CLIENT_SECRET',
-            callbackURL: 'http://localhost:5000/api/users/auth/google/callback',
+            callbackURL: 'http://localhost:4000/api/users/auth/google/callback',
             scope: ['r_emailaddress', 'r_liteprofile'],
         },
         (accessToken, refreshToken, profile, done) => {
@@ -27,9 +27,9 @@ passport.use(
     'google',
     new GoogleStrategy(
         {
-            clientID: process.env.CLIENT_ID,
-            clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: 'http://localhost:5000/api/users/auth/google/callback',
+            clientID: clientID,
+            clientSecret: clientSecret,
+            callbackURL: 'http://localhost:4000/api/users/auth/google/callback',
         },
         (accessToken, refreshToken, profile, done) => {
             // Handle the user profile returned by Google
