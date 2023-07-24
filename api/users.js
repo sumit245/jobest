@@ -132,14 +132,13 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 
 //13. Api endpoint to upload a resume
 router.post('/upload/:id', upload.single('resume'), async (req, res) => {
-    console.log(req.file)
     try {
         const { id } = req.params;
         const user = await Users.findById(id);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        user.resume = req.file.path;
+        // user.resume = req.file.path;
         await user.save();
         res.json({ msg: 'Resume Uploaded' });
     } catch (error) {

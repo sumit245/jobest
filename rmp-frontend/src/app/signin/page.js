@@ -36,7 +36,7 @@ export default function SignIn() {
                         <button type="button"><i className="fa fa-google"></i></button>
                         <button type="button"><i className="fa fa-linkedin"></i></button>
                     </div>
-                    <p className='login-text'>Don't have an account? <a className="reset-psw" href="#">Signup</a> </p>
+                    <a className="reset-psw" href="register">Signup</a>
                 </form>
             </div>
         </AuthModal>
