@@ -1,4 +1,17 @@
+'use client'
+import { useState } from "react"
+
 export default function HomepageContent() {
+  const [search, setSearch] = useState("")
+
+  const onSearch = async () => {
+    const response = await fetch(`http://localhost:4000/api/jobs/search-by-skills/${search}`)
+    const data = await response.json()
+    if (data.length === 0) {
+      alert('No results found')
+    }
+  }
+
   return (
     <section className="py-0" id="home">
       <div
@@ -30,15 +43,18 @@ export default function HomepageContent() {
               Every step of the way
             </p>
             <div className="pt-3">
-              <form>
+              <form onSubmit={onSearch}>
                 <div className="input-group w-xl-75 w-xxl-50 d-flex flex-end-center">
                   <input
                     className="form-control rounded-pill shadow-lg border-0"
-                    id="formGroupExampleInput"
+                    name="search"
+                    onChange={(e) => setSearch(e.target.value)}
                     type="text"
                     placeholder="Seacrh by skill, company and job"
                   />
                   <img
+                    role="button"
+                    onClick={onSearch}
                     className="input-box-icon me-2"
                     src="assets/img/illustrations/search.png"
                     width={30}
@@ -53,3 +69,4 @@ export default function HomepageContent() {
     </section>
   )
 }
+

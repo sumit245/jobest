@@ -1,10 +1,9 @@
 import Navbar from '@/component/navbar/Navbar'
 import './globals.css'
-import { Inter } from 'next/font/google'
-
+// import { Inter } from 'next/font/google'
 import HomepageContent from '@/component/hero/HomepageContent'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'ReferMyPal',
@@ -18,7 +17,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
       </head>
-      <body className={inter.className}>
+      <body>
         <Navbar />
         <HomepageContent />
         {children}

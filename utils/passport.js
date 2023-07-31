@@ -3,6 +3,9 @@ const passport = require('passport');
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
 
+const clientID = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+
 passport.use(
     'linkedin',
     new LinkedInStrategy(

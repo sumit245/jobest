@@ -63,11 +63,11 @@ router.route('/auth/signup-email-password').post(async (req, res) => {
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
         // Create a new user with the hashed password
-        const newUser = new Users({ user_id: userId, email_id, password: hashedPassword });
+        const newUser = new Users({ user_id: userId, email_id, ...req.body, password: hashedPassword });
 
         // Save the user to the database
         await newUser.save();
-        res.json({ status: 200, data: newUser, msg: "Employer created successfully" });
+        res.json({ status: 200, data: newUser, msg: "User created successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
