@@ -1,14 +1,18 @@
 'use client'
 import { useState } from "react"
-
+import { useRouter } from "next/navigation"
 export default function HomepageContent() {
   const [search, setSearch] = useState("")
-
+  const router = useRouter()
   const onSearch = async () => {
     const response = await fetch(`http://localhost:4000/api/jobs/search-by-skills/${search}`)
     const data = await response.json()
     if (data.length === 0) {
       alert('No results found')
+    }
+    else {
+      router.push(`/jobs`)
+      console.log(data)
     }
   }
 

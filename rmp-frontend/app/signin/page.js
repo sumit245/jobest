@@ -19,6 +19,8 @@ export default function SignIn() {
         if (token) {
             router.push('/home')
             setLoading(false)
+        } else {
+            alert('Invalid credentials')
         }
     }
     return (
