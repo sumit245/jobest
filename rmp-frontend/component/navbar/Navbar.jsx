@@ -2,8 +2,25 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Dropdown } from "react-bootstrap"
+import { useState } from "react"
+import DialogPopup from "../modal/Dialog"
+import LoginComponent from "../modal/LoginComponent"
+import RegistrationComponent from "../modal/RegistrationComponent"
 
 export default function Navbar({ isLoggedIn }) {
+    const [showDialog, setShowDialog] = useState(false);
+    const [activeDialog, setActiveDialog] = useState(null); // 'login' or 'registration'
+
+    const toggleDialog = (dialogType) => {
+        setShowDialog(true);
+        setActiveDialog(dialogType);
+    };
+
+    const closeModal = () => {
+        setShowDialog(false);
+        setActiveDialog(null);
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light fixed-top pb-3 backdrop">
             <a className="navbar-brand d-flex align-items-center fw-bold fs-2" href="#">
@@ -41,9 +58,13 @@ export default function Navbar({ isLoggedIn }) {
                     {
                         !isLoggedIn && (
                             <li className="nav-item px-2">
-                                <Link className="nav-link fw-medium" href="/employers">
+                                <a
+                                    className="nav-link fw-medium"
+                                    onClick={() => toggleDialog('login')}
+                                    href="#"
+                                >
                                     Employer
-                                </Link>
+                                </a>
                             </li>
                         )
                     }
@@ -88,6 +109,20 @@ export default function Navbar({ isLoggedIn }) {
                     </li>
                 </ul>
             </div>
+            <DialogPopup
+                title={activeDialog === 'login' ? 'Login For Employer' : 'Registration For Employer'}
+                show={showDialog}
+                onClose={closeModal}
+            >
+                {/* Dialog content */}
+                {activeDialog === 'login' ? (
+                    // Login form
+                    <LoginComponent onClose={closeModal} onShowRegistration={() => toggleDialog('registration')} />
+                ) : (
+                    // Registration form
+                    <RegistrationComponent onClose={closeModal} onShowLogin={() => toggleDialog('login')} />
+                )}
+            </DialogPopup>
         </nav>
     )
 }
